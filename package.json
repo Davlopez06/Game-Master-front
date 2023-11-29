@@ -1,0 +1,50 @@
+{
+  "name": "front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint && npx lint-staged",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "eslint-config-next": "13.4.19",
+    "next": "14.0.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "swr": "^2.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.3",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
+    "sass": "^1.67.0",
+    "typescript": "^5",
+    "vite": "^4.4.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx lint-staged && npm run lint"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.{css,scss,md,json}": [
+      "prettier --write"
+    ]
+  }
+}
