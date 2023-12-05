@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "npx lint-staged",
+    "lint": "next lint && npx lint-staged",
     "prepare": "husky install"
   },
   "dependencies": {
