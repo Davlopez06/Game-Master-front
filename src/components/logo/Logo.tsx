@@ -1,19 +1,22 @@
 import PropTypes from 'prop-types';
 import './Logo.scss';
 
-const Logo = ({ src = '', rotate = false }) => {
+// eslint-disable-next-line
+const Logo = ({ src = '', rotate = false, classNa = '', handleClick = () => {} }) => {
   const isRotate = () => {
     if (rotate) return ' logo-rotate';
 
     return '';
   };
 
-  return <img src={src} alt="Logo" className={`logo${isRotate()}`} />;
+  return <img src={src} alt="Logo" className={`${classNa}${isRotate()}`} onClick={handleClick} />;
 };
 
 Logo.propTypes = {
-  src: PropTypes.string,
+  classNa: PropTypes.string,
+  handleClick: PropTypes.func,
   rotate: PropTypes.bool,
+  src: PropTypes.string,
 };
 
 export default Logo;
