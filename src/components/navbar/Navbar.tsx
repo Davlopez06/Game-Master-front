@@ -10,9 +10,10 @@ import './Navbar.scss';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const { types, getTypes } = ContextState();
+  const { types, getTypes, sortGamesAZ, sortGamesZA } = ContextState();
   // eslint-disable-next-line
   const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/types`, fetchData);
+  const { data: games } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/games`, fetchData);
   const router = useRouter();
 
   const getFiters = () => {
@@ -27,6 +28,13 @@ const Navbar = () => {
     });
   };
 
+  const handleSort = (sort: string) => {
+    if (sort === 'A-Z') sortGamesAZ();
+    else sortGamesZA();
+
+    setShowMenu(false);
+  };
+
   const getMenu = () => {
     const isShow = showMenu ? ' show' : '';
 
@@ -37,8 +45,12 @@ const Navbar = () => {
         </div>
         <div className="slide-menu-container">
           <p className="slide-menu-title">Sort:</p>
-          <button className="slide-menu-item">A-Z</button>
-          <button className="slide-menu-item">Z-A</button>
+          <button className="slide-menu-item" onClick={() => handleSort('A-Z')}>
+            A-Z
+          </button>
+          <button className="slide-menu-item" onClick={() => handleSort('Z-A')}>
+            Z-A
+          </button>
         </div>
         <div className="slide-menu-container">
           <p className="slide-menu-title">Filter:</p>

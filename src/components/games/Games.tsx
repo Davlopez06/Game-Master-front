@@ -71,6 +71,12 @@ const Games = () => {
     else setNumberGames(9);
   }, [isTablet]);
 
+  useEffect(() => {
+    setPage(1);
+    if (isTablet) setNumberGames(10);
+    else setNumberGames(9);
+  }, [games]);
+
   return (
     <div className="games">
       <div className="games-container">{getGamesCards()}</div>

@@ -22,6 +22,8 @@ type ContextType = {
   getGames: (
     data: Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: []; img: ''; __v: 0 }>,
   ) => void;
+  sortGamesAZ: () => void;
+  sortGamesZA: () => void;
 };
 
 const Context = createContext<ContextType | undefined>(undefined);
@@ -57,12 +59,46 @@ const ContextProvider = ({ children = <></> }) => {
     setGames(data);
   };
 
+  const sortGamesAZ = () => {
+    const sortAZ = games.sort((a: any, b: any) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    })
+    setGames(sortAZ)
+  }
+
+  const sortGamesZA = () => {
+    const sortZA = games.sort((a: any, b: any) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+
+      if (nameA > nameB) {
+        return -1;
+      }
+      if (nameA < nameB) {
+        return 1;
+      }
+      return 0;
+    })
+    setGames(sortZA)
+  }
+
   const contextValue: ContextType = {
     game,
     games,
     types,
     getTypes,
     getGames,
+    sortGamesAZ,
+    sortGamesZA,
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
