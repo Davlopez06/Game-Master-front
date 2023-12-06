@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 type ContextType = {
-  games: Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: []; img: ''; __v: 0 }>;
+  games: Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: Array<string>; img: ''; __v: 0 }>;
   game: Object;
   types: Array<{
     _id: '';
@@ -11,6 +11,8 @@ type ContextType = {
     name: '';
     __v: 0;
   }>;
+  sort: string;
+  filter: string;
   getTypes: (
     data: Array<{
       _id: '';
@@ -20,18 +22,20 @@ type ContextType = {
     }>,
   ) => void;
   getGames: (
-    data: Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: []; img: ''; __v: 0 }>,
+    data: Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: Array<string>; img: ''; __v: 0 }>,
   ) => void;
-  sortGamesAZ: () => void;
-  sortGamesZA: () => void;
+  getSort: (sort: string) => void;
+  getFilter: (filter: string) => void;
 };
 
 const Context = createContext<ContextType | undefined>(undefined);
 
 const ContextProvider = ({ children = <></> }) => {
+  const [sort, setSort] = useState('');
+  const [filter, setFilter] = useState('');
   const [game, setGame] = useState<Object>({});
   const [games, setGames] = useState<
-    Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: []; img: ''; __v: 0 }>
+    Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: Array<string>; img: ''; __v: 0 }>
   >([]);
   const [types, setTypes] = useState<
     Array<{
@@ -54,51 +58,29 @@ const ContextProvider = ({ children = <></> }) => {
   };
 
   const getGames = (
-    data: Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: []; img: ''; __v: 0 }>,
+    data: Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: Array<string>; img: ''; __v: 0 }>,
   ) => {
     setGames(data);
   };
 
-  const sortGamesAZ = () => {
-    const sortAZ = games.sort((a: any, b: any) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
+  const getSort = (sort: string) => {
+    setSort(sort);
+  };
 
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
-    })
-    setGames(sortAZ)
-  }
-
-  const sortGamesZA = () => {
-    const sortZA = games.sort((a: any, b: any) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
-
-      if (nameA > nameB) {
-        return -1;
-      }
-      if (nameA < nameB) {
-        return 1;
-      }
-      return 0;
-    })
-    setGames(sortZA)
-  }
+  const getFilter = (filter: string) => {
+    setFilter(filter);
+  };
 
   const contextValue: ContextType = {
     game,
     games,
     types,
+    sort,
+    filter,
     getTypes,
     getGames,
-    sortGamesAZ,
-    sortGamesZA,
+    getSort,
+    getFilter,
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

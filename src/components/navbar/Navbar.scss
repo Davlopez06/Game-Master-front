@@ -32,14 +32,15 @@
 .slide-menu {
   background-image: linear-gradient(to right, rgb(143, 94, 37) 0%, rgb(251, 244, 161) 50%, rgb(143, 94, 37) 100%);
   color: #000;
+  height: max-content;
   left: -100%;
   max-height: calc(100vh - 78.78px);
+  min-height: calc(100vh - 78.78px);
   padding: 16px;
   position: absolute;
   top: 100%;
   transition: all ease-in-out 1s;
   width: 100%;
-  height: calc(100vh - 78.78px);
   z-index: 1;
 
   &-container {
@@ -78,9 +79,10 @@
 .show {
   height: max-content;
   left: 0;
-  max-height: max-content;
+  max-height: calc(100vh - 78.78px);
   min-height: calc(100vh - 78.78px);
   transition: all ease-in-out 1s;
+  overflow-y: auto;
 }
 
 @media screen and (min-width: 577px) {

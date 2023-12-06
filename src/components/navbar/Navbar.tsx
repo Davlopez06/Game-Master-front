@@ -10,29 +10,34 @@ import './Navbar.scss';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const { types, getTypes, sortGamesAZ, sortGamesZA } = ContextState();
+  const { types, getTypes, getSort, getFilter } = ContextState();
   // eslint-disable-next-line
   const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/types`, fetchData);
-  const { data: games } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/games`, fetchData);
   const router = useRouter();
+
+  const handleSort = (sort: string) => {
+    getFilter('');
+    getSort(sort);
+    setShowMenu(false);
+  };
+
+  const handleFilter = (filter: string) => {
+    getSort('');
+    if (filter === 'All') getFilter('');
+    else getFilter(filter);
+    setShowMenu(false);
+  };
 
   const getFiters = () => {
     if (types?.length === 0) return null;
 
     return types?.map((type, i) => {
       return (
-        <button key={`slide-menu-item-${i}`} className="slide-menu-item">
+        <button key={`slide-menu-item-${i}`} className="slide-menu-item" onClick={() => handleFilter(type.name)}>
           {type.name}
         </button>
       );
     });
-  };
-
-  const handleSort = (sort: string) => {
-    if (sort === 'A-Z') sortGamesAZ();
-    else sortGamesZA();
-
-    setShowMenu(false);
   };
 
   const getMenu = () => {
@@ -46,15 +51,23 @@ const Navbar = () => {
         <div className="slide-menu-container">
           <p className="slide-menu-title">Sort:</p>
           <button className="slide-menu-item" onClick={() => handleSort('A-Z')}>
-            A-Z
+            A - Z
           </button>
           <button className="slide-menu-item" onClick={() => handleSort('Z-A')}>
-            Z-A
+            Z - A
+          </button>
+          <button className="slide-menu-item" onClick={() => handleSort('100-0')}>
+            100 - 0
+          </button>
+          <button className="slide-menu-item" onClick={() => handleSort('0-100')}>
+            0 - 100
           </button>
         </div>
         <div className="slide-menu-container">
           <p className="slide-menu-title">Filter:</p>
-          <button className="slide-menu-item">All</button>
+          <button className="slide-menu-item" onClick={() => handleFilter('All')}>
+            All
+          </button>
           {getFiters()}
         </div>
       </div>

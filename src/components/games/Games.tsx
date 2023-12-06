@@ -6,19 +6,29 @@ import { useEffect, useState } from 'react';
 import Arrow from '@/asets/images/arrow.png';
 import Game from './child/Game';
 import useWindowSize from '@/utils/useWindowSize';
+import useSort from '@/utils/useSort';
+import useFilter from '@/utils/useFilter';
+import SkeletonGame from './child/SkeletonGame';
 
 const Games = () => {
-  const { games, getGames } = ContextState();
+  const { games, getGames, sort, filter } = ContextState();
   const [page, setPage] = useState(1);
   const [numberGames, setNumberGames] = useState(9);
   // eslint-disable-next-line
-  const { data } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/games`, fetchData);
+  const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/games`, fetchData);
   const { isTablet } = useWindowSize();
 
-  const getGamesCards = () => {
-    if (games?.length === 0) return null;
+  const isSortOrFilter = () => {
+    if (sort !== '') return useSort(games, sort)
+    if (filter !== '') return useFilter(games, filter)
 
-    return games?.slice(numberGames * (page - 1), numberGames * page).map((game, i) => <Game key={`game-${i}`} {...game} />);
+    return games;
+  }
+
+  const getGamesCards = () => {
+    if (isSortOrFilter()?.length === 0  || !data || error) return <SkeletonGame isTablet={isTablet} />;
+
+    return isSortOrFilter()?.slice(numberGames * (page - 1), numberGames * page).map((game, i) => <Game key={`game-${i}`} {...game} />);
   };
 
   const getTotalPages = (length: number) => {
@@ -38,14 +48,14 @@ const Games = () => {
 
       return 'games-arrow';
     } else {
-      if (page >= getTotalPages(games?.length ?? numberGames)) return 'games-arrow-no-valid';
+      if (page >= getTotalPages(isSortOrFilter()?.length ?? numberGames)) return 'games-arrow-no-valid';
 
       return 'games-arrow';
     }
   };
 
   const getPaginate = () => {
-    if (games?.length === 0) return null;
+    if (isSortOrFilter()?.length === 0 || !data || error) return null;
 
     return (
       <div className="games-paginate">
@@ -53,7 +63,7 @@ const Games = () => {
           <img src={Arrow?.src} alt="Arrow" className="arrow-left" />
         </button>
         <div className="games-pages">
-          {page} / {getTotalPages(games?.length ?? numberGames)}
+          {page} / {getTotalPages(isSortOrFilter()?.length ?? numberGames)}
         </div>
         <button className={getArrowClass('rigth')} onClick={() => handleArrow('rigth')}>
           <img src={Arrow?.src} alt="Arrow" className="arrow-right" />
@@ -75,7 +85,7 @@ const Games = () => {
     setPage(1);
     if (isTablet) setNumberGames(10);
     else setNumberGames(9);
-  }, [games]);
+  }, [games, sort, filter]);
 
   return (
     <div className="games">

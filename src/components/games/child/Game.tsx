@@ -5,15 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 
 const Game = ({
   _id = '',
-  id = 0,
   name = '',
-  description = '',
-  fecha = '',
   rating = 0,
-  plataformas = [],
-  generos = [],
   img = '',
-  __v = 0,
 }) => {
   const [width, setWidth] = useState('0px');
   const [isVisible, setIsVisible] = useState(false);
@@ -47,7 +41,7 @@ const Game = ({
     setTimeout(() => {
       getRatingPercent();
     }, 1000);
-  }, []);
+  }, [rating]);
   return (
     <button className={`${getVisibleClass('card')}`} ref={card} onClick={handleGame}>
       <img src={img} alt={name} className="card-img" />
