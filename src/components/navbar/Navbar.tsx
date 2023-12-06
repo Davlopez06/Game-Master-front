@@ -1,14 +1,16 @@
 import Logo from '@/components/logo';
 import Menu from '@/asets/images/menu.png';
+import Back from '@/asets/images/back.png';
 import LogoBlack from '@/asets/images/logoblack.png';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { ContextState } from '@/context/context';
 import { fetchData } from '@/utils/fetchData';
 import useSWR from 'swr';
+import PropTypes from 'prop-types';
 import './Navbar.scss';
 
-const Navbar = () => {
+const Navbar = ({ isHome = true}) => {
   const [showMenu, setShowMenu] = useState(false);
   const { types, getTypes, getSort, getFilter } = ContextState();
   // eslint-disable-next-line
@@ -78,6 +80,13 @@ const Navbar = () => {
     getTypes(data);
   }, [data, getTypes]);
 
+  if (!isHome) return <div className="navbar">
+  <Logo src={Back?.src} classNa="logo-menu" handleClick={() => router.push('/home')} />
+  <div className="logo-container">
+    <Logo src={LogoBlack?.src} classNa="logo-black" handleClick={() => router.push('/')} />
+  </div>
+</div>
+
   return (
     <div className="navbar">
       <Logo src={Menu?.src} classNa="logo-menu" handleClick={() => setShowMenu(!showMenu)} />
@@ -88,5 +97,9 @@ const Navbar = () => {
     </div>
   );
 };
+
+Navbar.propTypes = {
+  isHome: PropTypes.bool,
+}
 
 export default Navbar;

@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import '@/app/globals.scss';
-import HomeLayout from '@/layout/home';
 import icon from '@/app/favicon.ico';
 import { ContextProvider } from '@/context/context';
+import GameDetailLayout from '@/layout/gameDetail';
 
-export default function GameDatail() {
+export default function GameDetail() {
   return (
     <>
       <Head>
@@ -12,7 +12,7 @@ export default function GameDatail() {
         <link rel="icon" href={icon?.src} />
       </Head>
       <ContextProvider>
-        <HomeLayout />
+        <GameDetailLayout />
       </ContextProvider>
     </>
   );

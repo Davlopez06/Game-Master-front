@@ -1,0 +1,203 @@
+.detail {
+  min-height: calc(100vh - 78.78px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 12px;
+  transition: all ease-in-out 1s;
+}
+
+.detail-container,
+.detail-container-error {
+  background: linear-gradient(to right, rgb(143, 94, 37) 0%, rgb(251, 244, 161) 50%, rgb(143, 94, 37) 100%);
+  border-radius: 9px;
+  height: max-content;
+  width: calc(100% - 36px);
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail-container-error {
+  color: #000;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 100%;
+  padding: 7px 16px;
+}
+
+.game-detail-img {
+  aspect-ratio: 16/9;
+  border-radius: 9px;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  transform: translateY(0);
+  transition: all ease-in-out 1s;
+}
+
+.game-detail-info {
+  height: 0;
+  max-height: 0;
+  opacity: 0;
+  display: none;
+}
+
+.delete-button {
+  height: 0;
+  max-height: 0;
+  opacity: 0;
+  display: none;
+}
+
+.clicked {
+  max-height: 85%;
+
+  .game-detail-img {
+    aspect-ratio: 16/9;
+    border-radius: 9px;
+    height: 100%;
+    max-width: 70%;
+    object-fit: cover;
+    transform: translateY(-50%);
+    transition: all ease-in-out 1s;
+    margin: 0 auto;
+  }
+
+  .game-detail-info {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    height: auto;
+    max-height: max-content;
+    transform: translateY(minmax(-50%, -100px));
+    transition: all ease-in-out 1s;
+    gap: 20px;
+    opacity: 1;
+    padding: 0 16px 12px;
+  }
+
+  .game-detail-item {
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    h5 {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 100%;
+    }
+
+    p {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 100%;
+    }
+
+    .game-detail-bar {
+      border-radius: 9px;
+      border: 1px solid #000;
+      height: 30px;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+
+    .game-detail-color {
+      background: #000;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      transition: all ease-in-out 1s;
+      width: 0px;
+    }
+
+    .game-detail-subitem {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .game-detail-subitem > p {
+      background: #000;
+      border-radius: 9px;
+      color: rgb(251, 244, 161);
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 100%;
+      padding: 7px 10px;
+    }
+  }
+
+  .delete-button {
+    background: red;
+    border-radius: 9px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 500;
+    height: auto;
+    line-height: 100%;
+    margin: 16px 0;
+    max-height: max-content;
+    opacity: 1;
+    padding: 7px 10px;
+    transition: all ease-in-out 1s;
+  }
+}
+
+@media screen and (min-width: 577px) {
+  .clicked {
+    .game-detail-info {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .game-detail-item {
+      h5 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 22px;
+      }
+
+      .game-detail-subitem > p {
+        font-size: 22px;
+      }
+    }
+
+    .delete-button {
+      font-size: 24px;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .clicked {
+    .game-detail-info {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .game-detail-item {
+      h5 {
+        font-size: 28px;
+      }
+
+      p {
+        font-size: 26px;
+      }
+
+      .game-detail-subitem > p {
+        font-size: 26px;
+      }
+    }
+
+    .delete-button {
+      font-size: 28px;
+    }
+  }
+}

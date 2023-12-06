@@ -3,7 +3,7 @@ export default function useSort(
   sort: string,
 ) {
   if (sort === 'A-Z')
-    return array.sort((a: any, b: any) => {
+    return array?.sort((a: any, b: any) => {
       const nameA = a.name.toUpperCase();
       const nameB = b.name.toUpperCase();
 
@@ -17,7 +17,7 @@ export default function useSort(
     });
 
   if (sort === 'Z-A')
-    return array.sort((a: any, b: any) => {
+    return array?.sort((a: any, b: any) => {
       const nameA = a.name.toUpperCase();
       const nameB = b.name.toUpperCase();
 
@@ -30,9 +30,9 @@ export default function useSort(
       return 0;
     });
 
-    if (sort === '100-0') return array.sort((a, b) =>  b.rating - a.rating);
+    if (sort === '100-0') return array?.sort((a, b) =>  b.rating - a.rating);
 
-    if (sort === '0-100') return array.sort((a, b) => a.rating - b.rating );
+    if (sort === '0-100') return array?.sort((a, b) => a.rating - b.rating );
 
   return array;
 }

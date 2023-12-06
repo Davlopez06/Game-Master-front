@@ -3,7 +3,7 @@ export default function useFilter(
     filter: string,
   ) {
     if (filter !== '')
-      return array.filter(item => item.generos.includes(filter))
+      return array?.filter(item => item.generos.includes(filter))
 
     return array;
   }
