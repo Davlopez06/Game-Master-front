@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 type ContextType = {
-  games: Array<Object>;
+  games: Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: []; img: ''; __v: 0 }>;
   game: Object;
   types: Array<{
     _id: '';
@@ -19,13 +19,18 @@ type ContextType = {
       __v: 0;
     }>,
   ) => void;
+  getGames: (
+    data: Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: []; img: ''; __v: 0 }>,
+  ) => void;
 };
 
 const Context = createContext<ContextType | undefined>(undefined);
 
 const ContextProvider = ({ children = <></> }) => {
   const [game, setGame] = useState<Object>({});
-  const [games, setGames] = useState<Array<Object>>([]);
+  const [games, setGames] = useState<
+    Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: []; img: ''; __v: 0 }>
+  >([]);
   const [types, setTypes] = useState<
     Array<{
       _id: '';
@@ -46,11 +51,18 @@ const ContextProvider = ({ children = <></> }) => {
     setTypes(data);
   };
 
+  const getGames = (
+    data: Array<{ _id: ''; id: 0; name: ''; description: ''; fecha: ''; rating: 0; plataformas: []; generos: []; img: ''; __v: 0 }>,
+  ) => {
+    setGames(data);
+  };
+
   const contextValue: ContextType = {
     game,
     games,
     types,
     getTypes,
+    getGames,
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

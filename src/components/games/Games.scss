@@ -1,0 +1,146 @@
+.games-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(1, 1fr);
+  margin: 0 auto 16px;
+  max-width: 1400px;
+  padding: 0 16px;
+}
+
+.card,
+.no-visible-card {
+  background: rgb(251, 244, 161);
+  border-radius: 9px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: auto;
+  opacity: 0.5;
+  overflow: hidden;
+  width: 100%;
+
+  &-img {
+    aspect-ratio: 16/9;
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  &-title {
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 100%;
+    padding: 0 16px;
+    width: 100%;
+  }
+
+  &-rating {
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: 500;
+    gap: 6px;
+    line-height: 100%;
+    padding: 0 16px 16px;
+    width: 100%;
+  }
+
+  &-rating-bar {
+    border-radius: 9px;
+    border: 1px solid #000;
+    height: 30px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  &-rating-color {
+    background: #000;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: all ease-in-out 1s;
+    width: 0px;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.card {
+  transform: scale(1);
+  transition: all ease-in-out 0.5s;
+}
+
+.no-visible-card {
+  transform: scale(0);
+  transition: all ease-in-out 0.5s;
+}
+
+.games-paginate {
+  display: flex;
+  gap: 20px;
+  margin: 0 auto;
+  width: max-content;
+  padding-bottom: 16px;
+  align-items: center;
+}
+
+.games-arrow,
+.games-arrow-no-valid {
+  background: rgb(251, 244, 161);
+  border-radius: 50%;
+  cursor: pointer;
+  max-width: 50px;
+  padding: 5px;
+}
+
+.games-arrow:active {
+  transform: scale(1.2);
+}
+
+.arrow-left,
+.arrow-right {
+  background: transparent;
+  border-radius: 50%;
+  max-width: 100%;
+}
+
+.arrow-left {
+  transform: rotate(180deg);
+}
+
+.games-pages {
+  align-items: center;
+  background: rgb(251, 244, 161);
+  border-radius: 9px;
+  color: #000;
+  display: flex;
+  height: max-content;
+  justify-content: center;
+  max-width: max-content;
+  padding: 2px 5px;
+  text-align: center;
+}
+
+.games-arrow-no-valid {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@media screen and (min-width: 577px) {
+  .games-container {
+    gap: 30px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .games-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
