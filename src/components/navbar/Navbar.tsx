@@ -48,7 +48,7 @@ const Navbar = ({ isHome = true}) => {
     return (
       <div className={`slide-menu${isShow}`}>
         <div className="slide-menu-container">
-          <button className="slide-menu-item">Create game</button>
+          <button className="slide-menu-item" onClick={() => router.push('/create')}>Create game</button>
         </div>
         <div className="slide-menu-container">
           <p className="slide-menu-title">Sort:</p>

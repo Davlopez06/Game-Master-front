@@ -72,7 +72,7 @@ const Detail = () => {
 
   const getStyleDetail = () => {
     const padding = img?.current?.clientHeight ?? 0;
-    if (clicked && img) setPadding(`${(padding / 2) + 12}px`);
+    if (clicked && img) setPadding(`${padding / 2 + 12}px`);
     else setPadding('12px');
   };
 
@@ -109,12 +109,12 @@ const Detail = () => {
   useEffect(() => {
     getStyleDetail();
 
-    if (typeof window !== 'undefined'){
-        window.addEventListener('resize', getStyleDetail);
-    
-        return () => {
-            window.removeEventListener('resize', getStyleDetail);
-        };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', getStyleDetail);
+
+      return () => {
+        window.removeEventListener('resize', getStyleDetail);
+      };
     }
   }, [img, clicked]);
 

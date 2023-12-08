@@ -19,16 +19,18 @@ const Games = () => {
   const { isTablet } = useWindowSize();
 
   const isSortOrFilter = () => {
-    if (sort !== '') return useSort(games, sort)
-    if (filter !== '') return useFilter(games, filter)
+    if (sort !== '') return useSort(games, sort);
+    if (filter !== '') return useFilter(games, filter);
 
     return games;
-  }
+  };
 
   const getGamesCards = () => {
-    if (isSortOrFilter()?.length === 0  || !data || error) return <SkeletonGame isTablet={isTablet} />;
+    if (isSortOrFilter()?.length === 0 || !data || error) return <SkeletonGame isTablet={isTablet} />;
 
-    return isSortOrFilter()?.slice(numberGames * (page - 1), numberGames * page).map((game, i) => <Game key={`game-${i}`} {...game} />);
+    return isSortOrFilter()
+      ?.slice(numberGames * (page - 1), numberGames * page)
+      .map((game, i) => <Game key={`game-${i}`} {...game} />);
   };
 
   const getTotalPages = (length: number) => {
