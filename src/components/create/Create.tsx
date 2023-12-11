@@ -64,6 +64,12 @@ const Create = () => {
           return '*This field is required';
         }
       }
+
+      if (input === 'image') {
+        if (formData.img === '') {
+          return '*This field is required';
+        }
+      }
     }
 
     return '';
@@ -95,6 +101,10 @@ const Create = () => {
     }
 
     if (formData.generos.length === 0) {
+      return true;
+    }
+
+    if (formData.img === '') {
       return true;
     }
 
@@ -247,6 +257,7 @@ const Create = () => {
           <div>
             <label htmlFor="img">Image (url):</label>
             <input type="text" id="img" name="img" value={formData.img} onChange={handleChange} />
+            <p>{getError('image')}</p>
           </div>
           <div className="preview-image">
             <label htmlFor="img">Preview image:</label>
