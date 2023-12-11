@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Create.scss';
@@ -7,11 +8,21 @@ import { ContextState } from '@/context/context';
 import { createGame } from '@/utils/createGame';
 import { useRouter } from 'next/router';
 
+type fromDataType = {
+  name: string,
+  description: string,
+  fecha: string,
+  rating: string,
+  plataformas: string[],
+  generos: string[],
+  img: string,
+}
+
 const Create = () => {
   const { types } = ContextState();
   const router = useRouter();
   const [isError, setIsError] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<fromDataType>({
     name: '',
     description: '',
     fecha: '',
@@ -214,11 +225,11 @@ const Create = () => {
       </p>
     ));
 
-    const validateImg = () => {
-      if (formData?.img === '') return ImgDefault?.src
-  
-      return formData?.img
-    }
+  const validateImg = () => {
+    if (formData?.img === '') return ImgDefault?.src;
+
+    return formData?.img;
+  };
 
   return (
     <div className="create">
