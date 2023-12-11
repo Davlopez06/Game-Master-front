@@ -52,6 +52,56 @@ form {
       width: 100%;
     }
 
+    .plataforms {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .plataforms > p,
+    .plataforms > .selected {
+      border-radius: 9px;
+      border: 1px solid #000;
+      color: #000;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 100%;
+      padding: 7px 16px;
+      width: max-content;
+    }
+
+    .plataforms > .selected {
+      background: #000;
+      border: none;
+      color: rgb(251, 244, 161);
+    }
+
+    .genders {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .genders > p,
+    .genders > .selected {
+      border-radius: 9px;
+      border: 1px solid #000;
+      color: #000;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 100%;
+      padding: 7px 16px;
+      width: max-content;
+    }
+
+    .genders > .selected {
+      background: #000;
+      border: none;
+      color: rgb(251, 244, 161);
+    }
+
     img {
       aspect-ratio: 16/9;
       max-width: 100%;

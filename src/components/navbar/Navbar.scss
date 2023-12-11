@@ -35,7 +35,6 @@
   color: #000;
   height: max-content;
   left: -100%;
-  max-height: calc(100vh - 78.78px);
   min-height: calc(100vh - 78.78px);
   padding: 16px;
   position: absolute;
@@ -80,7 +79,6 @@
 .show {
   height: max-content;
   left: 0;
-  max-height: calc(100vh - 78.78px);
   min-height: calc(100vh - 78.78px);
   transition: all ease-in-out 1s;
   overflow-y: auto;

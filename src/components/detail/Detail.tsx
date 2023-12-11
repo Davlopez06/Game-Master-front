@@ -4,6 +4,7 @@ import { ContextState } from '@/context/context';
 import useSWR from 'swr';
 import { fetchData } from '@/utils/fetchData';
 import { useEffect, useRef, useState } from 'react';
+import ImgDefault from '@/asets/images/game-default.png';
 
 const Detail = () => {
   const { game, getGame } = ContextState();
@@ -94,6 +95,17 @@ const Detail = () => {
     );
   };
 
+  const handleImageError = (e: any) => {
+    e.target.onerror = null;
+    e.target.src = ImgDefault?.src;
+  };
+
+  const validateImg = () => {
+    if (game?.[0]?.img === '') return ImgDefault?.src
+
+    return game?.[0]?.img
+  }
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
 
@@ -134,7 +146,7 @@ const Detail = () => {
   return (
     <div className="detail" style={{ paddingTop: padding }}>
       <div className={`detail-container${getIsClicked()}`} ref={container}>
-        <img className="game-detail-img" src={game?.[0]?.img} alt={game?.[0]?.name} ref={img} />
+        <img className="game-detail-img" src={validateImg()} alt={game?.[0]?.name} ref={img} onError={handleImageError}/>
         {getClickedContet()}
         {getDeleteButton()}
       </div>

@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Create.scss';
 import ImgDefault from '@/asets/images/game-default.png';
+import { platform } from 'os';
+import { ContextState } from '@/context/context';
+import { createGame } from '@/utils/createGame';
+import { useRouter } from 'next/router';
 
 const Create = () => {
+  const { types } = ContextState();
+  const router = useRouter();
   const [isError, setIsError] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -15,11 +21,12 @@ const Create = () => {
     img: '',
   });
 
+  let platforms = ['Xbox One', 'Switch', 'Xbox x|s', 'PlayStation 5', 'PlayStation 4', 'PlayStation 3', 'PC', 'Xbox 360'];
+
   const getError = (input: string) => {
     if (isError) {
       if (input === 'name') {
         if (formData.name === '') {
-          console.log('No nombre');
           return '*This field is required';
         }
       }
@@ -37,13 +44,11 @@ const Create = () => {
       }
 
       if (input === 'rating') {
-        console.log('Entra 1');
         if (formData.rating === '') {
           return '*This field is required';
         }
 
         if (parseFloat(formData.rating) < 0 || parseFloat(formData.rating) > 5) {
-          console.log('Entra 2');
           return '*This field must be 0 - 5';
         }
       }
@@ -81,9 +86,7 @@ const Create = () => {
       return true;
     }
 
-    console.log(formData.rating);
     if (parseFloat(formData.rating) < 0 || parseFloat(formData.rating) > 5) {
-      console.log('Entra 3');
       return true;
     }
 
@@ -123,23 +126,89 @@ const Create = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    console.log('Validate', validateError(), formData);
-
     if (!validateError()) {
-      setFormData({
-        name: '',
-        description: '',
-        fecha: '',
-        rating: '',
-        plataformas: [],
-        generos: [],
-        img: '',
-      });
-      setIsError(false);
+      try {
+        createGame(formData);
+        setFormData({
+          name: '',
+          description: '',
+          fecha: '',
+          rating: '',
+          plataformas: [],
+          generos: [],
+          img: '',
+        });
+        setIsError(false);
+        router.push('/home');
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       setIsError(true);
     }
   };
+
+  const handleList = (plataform: any) => {
+    if (formData.plataformas.includes(plataform)) {
+      const newData = formData?.plataformas?.filter(data => data !== plataform);
+      setFormData(prevData => ({
+        ...prevData,
+        plataformas: newData,
+      }));
+    } else {
+      setFormData(prevData => ({
+        ...prevData,
+        plataformas: [...formData?.plataformas, plataform],
+      }));
+    }
+  };
+
+  const handleType = (type: any) => {
+    if (formData?.generos?.includes(type)) {
+      const newData = formData?.generos?.filter(data => data !== type);
+      setFormData(prevData => ({
+        ...prevData,
+        generos: newData,
+      }));
+    } else {
+      setFormData(prevData => ({
+        ...prevData,
+        generos: [...formData?.generos, type],
+      }));
+    }
+  };
+
+  const getPlataformClass = (plataform: string) => {
+    if (formData?.plataformas?.includes(plataform)) return 'selected';
+
+    return 'plataform';
+  };
+
+  const getGenderClass = (type: string) => {
+    if (formData?.generos?.includes(type)) return 'selected';
+
+    return 'gender';
+  };
+
+  const getPlataforms = () =>
+    platforms.map(plataform => (
+      <p className={getPlataformClass(plataform)} onClick={() => handleList(plataform)}>
+        {plataform}
+      </p>
+    ));
+
+  const getGenders = () =>
+    types?.map(type => (
+      <p className={getGenderClass(type.name)} onClick={() => handleType(type.name)}>
+        {type.name}
+      </p>
+    ));
+
+    const validateImg = () => {
+      if (formData?.img === '') return ImgDefault?.src
+  
+      return formData?.img
+    }
 
   return (
     <div className="create">
@@ -167,12 +236,12 @@ const Create = () => {
           </div>
           <div>
             <label htmlFor="plataformas">Platforms:</label>
-            <input type="text" id="plataformas" name="plataformas" value={formData.plataformas} onChange={handleChange} />
+            <div className="plataforms">{getPlataforms()}</div>
             <p>{getError('plataformas')}</p>
           </div>
           <div>
             <label htmlFor="generos">Genders:</label>
-            <input type="text" id="generos" name="generos" value={formData.generos} onChange={handleChange} />
+            <div className="genders">{getGenders()}</div>
             <p>{getError('generos')}</p>
           </div>
           <div>
@@ -181,7 +250,7 @@ const Create = () => {
           </div>
           <div className="preview-image">
             <label htmlFor="img">Preview image:</label>
-            <img src={formData.img ?? ImgDefault?.src} alt="Priview" onError={handleImageError} />
+            <img src={validateImg()} alt="Priview" onError={handleImageError} />
           </div>
           <button type="submit">Create</button>
         </form>

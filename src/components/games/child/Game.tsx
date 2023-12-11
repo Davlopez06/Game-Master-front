@@ -2,6 +2,7 @@ import useWindowScrollResize from '@/utils/useWindowScrollResize';
 import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
+import ImgDefault from '@/asets/images/game-default.png';
 
 const Game = ({
   _id = '',
@@ -35,6 +36,18 @@ const Game = ({
   const handleGame = () => {
     router.push('/game/' + _id)
   }
+
+  const handleImageError = (e: any) => {
+    e.target.onerror = null;
+    e.target.src = ImgDefault?.src;
+  };
+
+  const validateImg = () => {
+    if (img === '') return ImgDefault?.src
+
+    return img
+  }
+
   useWindowScrollResize(verificateVisibility, card);
 
   useEffect(() => {
@@ -44,7 +57,7 @@ const Game = ({
   }, [rating]);
   return (
     <button className={`${getVisibleClass('card')}`} ref={card} onClick={handleGame}>
-      <img src={img} alt={name} className="card-img" />
+      <img src={validateImg()} alt={name} className="card-img" onError={handleImageError}/>
       <h5 className="card-title">{name}</h5>
       <div className="card-rating">
         <p className="card-rating-text">Rating:</p>
